@@ -1,0 +1,23 @@
+﻿@model Quote
+
+@{
+    ViewData["Title"] = "Random Quotes";
+}
+
+<h2>Random Quotes</h2>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <blockquote>
+            <p>
+                @Model.QuoteText
+            </p>
+            <footer>@Model.Author</footer>
+        </blockquote>
+    </div>
+</div>
+
+
+<form method="post" asp-action="ReloadPage">
+    <input type="submit" class="btn btn-success btn-lg text-center" value="Refresh" />
+</form>
