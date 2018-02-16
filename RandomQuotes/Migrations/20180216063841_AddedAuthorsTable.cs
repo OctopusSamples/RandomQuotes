@@ -18,7 +18,7 @@ namespace RandomQuotes.Migrations
                 name: "AuthorID",
                 table: "Quote",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 1);
 
             migrationBuilder.CreateTable(
                 name: "Author",
@@ -32,6 +32,8 @@ namespace RandomQuotes.Migrations
                 {
                     table.PrimaryKey("PK_Author", x => x.AuthorID);
                 });
+
+            migrationBuilder.Sql("INSERT INTO [Author] ([Name]) VALUES ('SYSTEM')");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Quote_AuthorID",

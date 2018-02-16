@@ -1,10 +1,10 @@
 ﻿@model List<Quote>
 
 @{
-    ViewData["Title"] = "Quotes by " + @Model.First().Author;
+    ViewData["Title"] = "Quotes by " + Model.First().Author.Name;
 }
 
-<h2>Quotes by @Model.First().Author</h2>
+<h2>Quotes by @Model.First().Author.Name</h2>
 
 @foreach (var quote in Model)
 {
