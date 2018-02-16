@@ -1,5 +1,3 @@
-using System;
-
 namespace RandomQuotes.Models
 {
     public class ErrorViewModel

@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RandomQuotes.Models;
+using RandomQuotes.Data;
 
 namespace RandomQuotes
 {
@@ -21,6 +19,9 @@ namespace RandomQuotes
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<QuoteContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddMvc();
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
         }
@@ -43,14 +44,9 @@ namespace RandomQuotes
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
             });
-
-            var quoteFilePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\data\quotes.txt");
-            Quote.Quotes = File.Exists(quoteFilePath) ? File.ReadAllLines(quoteFilePath).Select(System.Net.WebUtility.HtmlDecode).ToList() : new List<string>();
-            var authorFilePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\data\authors.txt");
-            Quote.Authors = File.Exists(authorFilePath) ? File.ReadAllLines(authorFilePath).Select(System.Net.WebUtility.HtmlDecode).ToList() : new List<string>();
         }
     }
 }
