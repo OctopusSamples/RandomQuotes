@@ -13,7 +13,7 @@ namespace RandomQuotes.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Quote>().ToTable("Course");
+            modelBuilder.Entity<Quote>().ToTable("Quote");
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RandomQuotes.Data;
 using RandomQuotes.Models;
@@ -17,22 +18,25 @@ namespace RandomQuotes.Controllers
             _quoteContext = quoteContext;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var index = _random.Next(_quoteContext.Quotes.Count());
-            var quote = _quoteContext.Quotes.Find(index);
-            return View(quote);
+            var index = _random.Next(1, _quoteContext.Quotes.Count() - 1);
+            return View(await _quoteContext.Quotes.FindAsync(index));
         }
 
-        [HttpPost]
-        public IActionResult ReloadPage()
+        public IActionResult QuotesByAuthor()
         {
-            return RedirectToAction("Index");
+            throw new NotImplementedException();
+        }
+
+        public async Task<IActionResult> ReloadPage()
+        {
+            return await Task.Run<ActionResult>(() => RedirectToAction("Index", "Home"));
         }
 
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
         }
     }
 }
