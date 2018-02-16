@@ -26,7 +26,6 @@ namespace RandomQuotes.Data
                 new Author { Name = "Paul Rand" },
                 new Author { Name = "Elon Musk" },
                 new Author { Name = "Jessica Hische" },
-                new Author { Name = "Paul Rand" },
                 new Author { Name = "Mark Weiser" },
                 new Author { Name = "Pablo Picasso" },
                 new Author { Name = "Charles Mingus" },
@@ -49,10 +48,10 @@ namespace RandomQuotes.Data
                 new Quote { Author = authors[7], QuoteText = "Design is so simple. That’s why it’s so complicated."},
                 new Quote { Author = authors[8], QuoteText = "Any product that needs a manual to work is broken."},
                 new Quote { Author = authors[9], QuoteText = "The work you do while you procrastinate is probably the work you should be doing for the rest of your life."},
-                new Quote { Author = authors[10], QuoteText = "Simplicity is not the goal. It is the by-product of a good idea and modest expectations."},
-                new Quote { Author = authors[11], QuoteText = "The most profound technologies are those that disappear. They weave themselves into the fabric of everyday life until they are indistinguishable from it."},
-                new Quote { Author = authors[12], QuoteText = "Every child is an artist, the problem is staying an artist when you grow up."},
-                new Quote { Author = authors[13], QuoteText = "Creativity is more than just being different. Anybody can plan weird; that’s easy. What’s hard is to be as simple as Bach. Making the simple, awesomely simple, that’s creativity."},
+                new Quote { Author = authors[8], QuoteText = "Simplicity is not the goal. It is the by-product of a good idea and modest expectations."},
+                new Quote { Author = authors[10], QuoteText = "The most profound technologies are those that disappear. They weave themselves into the fabric of everyday life until they are indistinguishable from it."},
+                new Quote { Author = authors[11], QuoteText = "Every child is an artist, the problem is staying an artist when you grow up."},
+                new Quote { Author = authors[12], QuoteText = "Creativity is more than just being different. Anybody can plan weird; that’s easy. What’s hard is to be as simple as Bach. Making the simple, awesomely simple, that’s creativity."},
             };
             
             foreach (Quote q in quotes)

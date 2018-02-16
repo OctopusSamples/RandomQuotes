@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RandomQuotes.Data;
 using RandomQuotes.Models;
 
@@ -21,12 +22,12 @@ namespace RandomQuotes.Controllers
         public async Task<IActionResult> Index()
         {
             var index = _random.Next(1, _quoteContext.Quotes.Count() - 1);
-            return View(await _quoteContext.Quotes.FindAsync(index));
+            return View(await _quoteContext.Quotes.Include(x => x.Author).Where(q => q.ID == index).FirstOrDefaultAsync());
         }
 
-        public IActionResult QuotesByAuthor()
+        public async Task<IActionResult> QuotesByAuthor(int authorId)
         {
-            throw new NotImplementedException();
+            return View(await _quoteContext.Quotes.Include(x => x.Author).Where(q => q.AuthorID == authorId).ToListAsync());
         }
 
         public async Task<IActionResult> ReloadPage()

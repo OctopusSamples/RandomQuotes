@@ -46,7 +46,7 @@ namespace RandomQuotes.Migrations
                 principalColumn: "AuthorID",
                 onDelete: ReferentialAction.Cascade);
 
-            migrationBuilder.Sql("INSERT INTO [Author] ([Name]) SELECT q.AuthorName AS [Name] FROM Quote q");
+            migrationBuilder.Sql("INSERT INTO [Author] ([Name]) SELECT DISTINCT q.AuthorName AS [Name] FROM Quote q");
             migrationBuilder.Sql("UPDATE Quote SET Quote.AuthorID = a.AuthorID FROM Author a WHERE Quote.AuthorName = a.[Name]");
         }
 
