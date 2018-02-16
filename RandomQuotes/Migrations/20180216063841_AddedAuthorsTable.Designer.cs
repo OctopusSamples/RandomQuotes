@@ -11,9 +11,10 @@ using System;
 namespace RandomQuotes.Migrations
 {
     [DbContext(typeof(QuoteContext))]
-    partial class QuoteContextModelSnapshot : ModelSnapshot
+    [Migration("20180216063841_AddedAuthorsTable")]
+    partial class AddedAuthorsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

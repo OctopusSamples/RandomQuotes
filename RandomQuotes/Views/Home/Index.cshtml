@@ -12,11 +12,11 @@
             <p>
                 @Model.QuoteText
             </p>
-            <a asp-action="QuotesByAuthor" asp-route-id="@Model.ID"><footer>@Model.Author</footer></a>
+            <a asp-action="QuotesByAuthor" asp-route-id="@Model.AuthorID"><footer>@Model.Author.Name</footer></a>
         </blockquote>
     </div>
 </div>
 
 <div class="btn btn-success btn-lg text-center">
-    <a style="color:white" white" asp-action="ReloadPage"><span>Refresh</span></a>
+    <a style="color:white" asp-action="ReloadPage"><span>Refresh</span></a>
 </div>
