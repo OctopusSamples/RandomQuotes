@@ -9,7 +9,7 @@ namespace RandomQuotes.Controllers
 {
     public class HomeController : Controller
     {
-        private Random _random;
+        private readonly Random _random = new Random();
         private readonly QuoteContext _quoteContext;
 
         public HomeController(QuoteContext quoteContext)
