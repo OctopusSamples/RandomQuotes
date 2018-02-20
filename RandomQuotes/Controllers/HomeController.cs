@@ -22,12 +22,7 @@ namespace RandomQuotes.Controllers
         public async Task<IActionResult> Index()
         {
             var index = _random.Next(1, _quoteContext.Quotes.Count() - 1);
-            return View(await _quoteContext.Quotes.Include(x => x.Author).Where(q => q.ID == index).FirstOrDefaultAsync());
-        }
-
-        public async Task<IActionResult> QuotesByAuthor(int authorId)
-        {
-            return View(await _quoteContext.Quotes.Include(x => x.Author).Where(q => q.AuthorID == authorId).ToListAsync());
+            return View(await _quoteContext.Quotes.Where(q => q.ID == index).FirstOrDefaultAsync());
         }
 
         public async Task<IActionResult> ReloadPage()

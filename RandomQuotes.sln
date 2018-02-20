@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomQuotes", "RandomQuotes\RandomQuotes.csproj", "{A42CA059-49B7-4D4E-9F86-1A289869066B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomQuotes", "RandomQuotes\RandomQuotes.csproj", "{A42CA059-49B7-4D4E-9F86-1A289869066B}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "QuoteDatabase", "QuoteDatabase\QuoteDatabase.sqlproj", "{BD51728B-C74A-4EA7-8EB9-26D1D8D6ADFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,12 @@ Global
 		{A42CA059-49B7-4D4E-9F86-1A289869066B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A42CA059-49B7-4D4E-9F86-1A289869066B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A42CA059-49B7-4D4E-9F86-1A289869066B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD51728B-C74A-4EA7-8EB9-26D1D8D6ADFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD51728B-C74A-4EA7-8EB9-26D1D8D6ADFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD51728B-C74A-4EA7-8EB9-26D1D8D6ADFA}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{BD51728B-C74A-4EA7-8EB9-26D1D8D6ADFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD51728B-C74A-4EA7-8EB9-26D1D8D6ADFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD51728B-C74A-4EA7-8EB9-26D1D8D6ADFA}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
