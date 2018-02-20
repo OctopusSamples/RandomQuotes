@@ -1,0 +1,23 @@
+﻿@model List<Quote>
+
+@{
+    ViewData["Title"] = "Quotes by " + Model.First().Author.Name;
+}
+
+<h2>Quotes by @Model.First().Author.Name</h2>
+
+@foreach (var quote in Model)
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <blockquote>
+                <p>
+                    @quote.QuoteText
+                </p>
+                <footer>@quote.Author.Name</footer>
+            </blockquote>
+            <hr />
+        </div>
+    </div>
+}
+

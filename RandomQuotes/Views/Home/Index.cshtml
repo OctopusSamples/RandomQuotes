@@ -12,7 +12,7 @@
             <p>
                 @Model.QuoteText
             </p>
-            <footer>@Model.Author</footer>
+            <a asp-action="QuotesByAuthor" asp-route-authorId="@Model.AuthorID"><footer>@Model.Author.Name</footer></a>
         </blockquote>
     </div>
 </div>

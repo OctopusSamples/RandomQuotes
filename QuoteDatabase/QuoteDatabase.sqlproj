@@ -64,8 +64,12 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Quote.sql" />
+    <Build Include="dbo\Tables\Author.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="QuoteDatabase.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Script.PostDeployment1.sql" />
   </ItemGroup>
 </Project>
