@@ -65,4 +65,7 @@
   <ItemGroup>
     <Build Include="dbo\Tables\Quote.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="QuoteDatabase.publish.xml" />
+  </ItemGroup>
 </Project>
