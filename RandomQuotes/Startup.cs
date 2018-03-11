@@ -43,7 +43,7 @@ namespace RandomQuotes
             {
                 routes.MapRoute(
                     "default",
-                    "{controller=Home}/{action=Index}/{id?}");
+                    "{controller=Quotes}/{action=Index}/{id?}");
             });
         }
     }
