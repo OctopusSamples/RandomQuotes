@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace RandomQuotes.Models
+namespace RandomQuotes.Data.Models
 {
     public class Quote
     {

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RandomQuotes.Data;
+using RandomQuotes.Data.Data;
 
 namespace RandomQuotes
 {

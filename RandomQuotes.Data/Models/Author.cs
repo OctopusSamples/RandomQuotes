@@ -1,4 +1,4 @@
-﻿namespace RandomQuotes.Models
+﻿namespace RandomQuotes.Data.Models
 {
     public class Author
     {

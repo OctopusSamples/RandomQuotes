@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using RandomQuotes.Data;
-using RandomQuotes.Models;
+using RandomQuotes.Data.Data;
+using RandomQuotes.Data.Models;
 
 namespace RandomQuotes.Controllers
 {

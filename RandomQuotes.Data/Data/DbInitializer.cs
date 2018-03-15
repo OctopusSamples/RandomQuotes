@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using RandomQuotes.Models;
+using RandomQuotes.Data.Models;
 
-namespace RandomQuotes.Data
+namespace RandomQuotes.Data.Data
 {
     public class DbInitializer
     {

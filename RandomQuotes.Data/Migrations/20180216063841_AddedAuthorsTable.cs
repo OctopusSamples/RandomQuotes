@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 
-namespace RandomQuotes.Migrations
+namespace RandomQuotes.Data.Migrations
 {
     public partial class AddedAuthorsTable : Migration
     {

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RandomQuotes.Data;
+using RandomQuotes.Data.Data;
 
 namespace RandomQuotes
 {
@@ -43,7 +44,7 @@ namespace RandomQuotes
             {
                 routes.MapRoute(
                     "default",
-                    "{controller=Quotes}/{action=Index}/{id?}");
+                    "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
