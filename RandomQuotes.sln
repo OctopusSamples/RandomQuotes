@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomQuotes", "RandomQuotes\RandomQuotes.csproj", "{A42CA059-49B7-4D4E-9F86-1A289869066B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomQuotes.Web", "RandomQuotes\RandomQuotes.Web.csproj", "{A42CA059-49B7-4D4E-9F86-1A289869066B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomQuotes.Data", "RandomQuotes.Data\RandomQuotes.Data.csproj", "{A09DA2BD-8B19-4ECA-903A-623BFA868F2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomQuotes.Data", "RandomQuotes.Data\RandomQuotes.Data.csproj", "{A09DA2BD-8B19-4ECA-903A-623BFA868F2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomQuotes.Web.AdminModule", "RandomQuotes.Web.AdminModule\RandomQuotes.Web.AdminModule.csproj", "{E144F1BB-804C-486B-908A-9D8315EB4E49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{A09DA2BD-8B19-4ECA-903A-623BFA868F2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A09DA2BD-8B19-4ECA-903A-623BFA868F2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A09DA2BD-8B19-4ECA-903A-623BFA868F2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E144F1BB-804C-486B-908A-9D8315EB4E49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E144F1BB-804C-486B-908A-9D8315EB4E49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E144F1BB-804C-486B-908A-9D8315EB4E49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E144F1BB-804C-486B-908A-9D8315EB4E49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
