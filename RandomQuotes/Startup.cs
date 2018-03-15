@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 using Microsoft.AspNetCore.Builder;
@@ -9,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Options;
 using RandomQuotes.Data.Data;
 
 namespace RandomQuotes
@@ -34,16 +37,18 @@ namespace RandomQuotes
 
             foreach (var assembly in moduleAssemblies)
             {
-                mvcBuilder.AddApplicationPart(assembly);
+                mvcBuilder.AddApplicationPart(assembly.Item2);
             }
 
-            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            var appSettingsConfig = Configuration.GetSection("AppSettings");
+            appSettingsConfig["Modules"] = moduleAssemblies.Any() ? string.Join(",", moduleAssemblies.Select(x => x.Item1)) : "";
+            services.Configure<AppSettings>(appSettingsConfig);
 
             foreach (var assembly in moduleAssemblies)
             {
                 services.Configure<RazorViewEngineOptions>(options =>
                 {
-                    options.FileProviders.Add(new EmbeddedFileProvider(assembly));
+                    options.FileProviders.Add(new EmbeddedFileProvider(assembly.Item2));
                 });
             }
         }
@@ -71,9 +76,9 @@ namespace RandomQuotes
             });
         }
 
-        private IList<Assembly> GetModuleAssemblies()
+        private IList<(string, Assembly)> GetModuleAssemblies()
         {
-            var moduleAssemblies = new List<Assembly>();
+            var moduleAssemblies = new List<(string, Assembly)>();
 
             // Thanks to Thien Nguyen for the code snippet to scan a modules directory for assemblies.
             // Source: https://www.codeproject.com/Articles/1109475/Modular-Web-Application-with-ASP-NET-Core
@@ -87,7 +92,7 @@ namespace RandomQuotes
                 {
                     continue;
                 }
-            
+
                 foreach (var file in binFolder.GetFileSystemInfos("*.dll", SearchOption.AllDirectories))
                 {
                     Assembly assembly;
@@ -107,11 +112,9 @@ namespace RandomQuotes
                             throw;
                         }
                     }
-            
-                    if (assembly.FullName.Contains(moduleFolder.Name))
-                    {
-                        moduleAssemblies.Add(assembly);
-                    }
+
+                    var assemblyInfo = (Name: moduleFolder.Name, Assembly: assembly);
+                    moduleAssemblies.Add(assemblyInfo);
                 }
             }
 

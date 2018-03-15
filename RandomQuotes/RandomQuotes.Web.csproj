@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RandomQuotes.Data\RandomQuotes.Data.csproj" />
-    <ProjectReference Include="..\RandomQuotes.Web.AdminModule\RandomQuotes.Web.AdminModule.csproj" />
   </ItemGroup>
 
   <ItemGroup>

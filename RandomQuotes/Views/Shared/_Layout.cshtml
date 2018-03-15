@@ -25,10 +25,13 @@
     <div class="container">
         <div class="navbar-header">
             <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Random Quotes</a>
-            <a asp-area="" asp-controller="Home" asp-action="About" class="navbar-brand">About</a>
+            @foreach (var module in Settings.Value.Modules.Split(","))
+            {
+            <a asp-area="" asp-controller="@module" asp-action="Index" class="navbar-brand">@module</a>
+            }
         </div>
         <div class="navbar-right">
-            <a asp-area="" asp-controller="Quotes" asp-action="Index" class="navbar-brand pull-right">Admin</a>
+            <a asp-area="" asp-controller="Home" asp-action="About" class="navbar-brand">About</a>
         </div>
     </div>
 </nav>

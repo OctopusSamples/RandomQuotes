@@ -11,11 +11,11 @@ using RandomQuotes.Data.Models;
 
 namespace RandomQuotes.Controllers
 {
-    public class QuotesController : Controller
+    public class AdminController : Controller
     {
         private readonly QuoteContext _context;
 
-        public QuotesController(QuoteContext context)
+        public AdminController(QuoteContext context)
         {
             _context = context;
         }

@@ -3,33 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-
-<!--  <ItemGroup>-->
-<!--    <None Remove="Views\Quotes\Create.cshtml" />-->
-<!--    <None Remove="Views\Quotes\Delete.cshtml" />-->
-<!--    <None Remove="Views\Quotes\Details.cshtml" />-->
-<!--    <None Remove="Views\Quotes\Edit.cshtml" />-->
-<!--    <None Remove="Views\Quotes\Index.cshtml" />-->
-<!--  </ItemGroup>-->
-
-<!--  <ItemGroup>-->
-<!--    <Content Include="Views\Quotes\Create.cshtml">-->
-<!--      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>-->
-<!--    </Content>-->
-<!--    <Content Include="Views\Quotes\Delete.cshtml">-->
-<!--      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>-->
-<!--    </Content>-->
-<!--    <Content Include="Views\Quotes\Details.cshtml">-->
-<!--      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>-->
-<!--    </Content>-->
-<!--    <Content Include="Views\Quotes\Edit.cshtml">-->
-<!--      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>-->
-<!--    </Content>-->
-<!--    <Content Include="Views\Quotes\Index.cshtml">-->
-<!--      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>-->
-<!--    </Content>-->
-<!--  </ItemGroup>-->
-  
+ 
   <ItemGroup>
     <EmbeddedResource Include="Views\**\*.cshtml" />
   </ItemGroup>
