@@ -1,0 +1,39 @@
+﻿@model RandomQuotes.Data.Models.FavoriteQuoteViewModel
+@{
+    ViewData["Title"] = "Tell your friends";
+}
+
+<h2>Share your favorite quote!</h2>
+
+<p>Tell us about your favorite quotes and we might add them to our site!</p>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Share">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="QuoteText" class="control-label"></label>
+                <input asp-for="QuoteText" class="form-control" />
+                <span asp-validation-for="QuoteText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AuthorName" class="control-label"></label>
+                <input asp-for="AuthorName" class="form-control"></input>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SharingContactName" class="control-label"></label>
+                <input asp-for="SharingContactName" class="form-control"></input>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="SharingContactEmail" class="control-label"></label>
+                <input asp-for="SharingContactEmail" class="form-control"></input>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Share" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>

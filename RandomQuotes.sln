@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomQuotes.Web.AdminModul
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomQuotes.Web", "RandomQuotes.Web\RandomQuotes.Web.csproj", "{5EA0BB3E-22B9-48BD-9BC1-439666A72C9E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomQuotes.Web.SharingModule", "RandomQuotes.Web.SocialModule\RandomQuotes.Web.SharingModule.csproj", "{95F8217D-618C-401C-85A9-8EB286E1580E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{5EA0BB3E-22B9-48BD-9BC1-439666A72C9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EA0BB3E-22B9-48BD-9BC1-439666A72C9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EA0BB3E-22B9-48BD-9BC1-439666A72C9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95F8217D-618C-401C-85A9-8EB286E1580E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95F8217D-618C-401C-85A9-8EB286E1580E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95F8217D-618C-401C-85A9-8EB286E1580E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95F8217D-618C-401C-85A9-8EB286E1580E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

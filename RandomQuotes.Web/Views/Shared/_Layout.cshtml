@@ -25,7 +25,7 @@
     <div class="container">
         <div class="navbar-header">
             <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Random Quotes</a>
-            @foreach (var module in Settings.Value.Modules.Split(","))
+            @foreach (var module in Settings.Value.Modules.Split(",").OrderByDescending(s => s))
             {
             <a asp-area="" asp-controller="@module" asp-action="Index" class="navbar-brand">@module</a>
             }
