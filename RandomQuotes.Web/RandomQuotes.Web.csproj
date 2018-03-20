@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
+    <MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,5 +33,5 @@
   <ItemGroup>
     <Folder Include="Modules\" />
   </ItemGroup>
-
+  
 </Project>
