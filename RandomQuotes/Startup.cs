@@ -47,9 +47,9 @@ namespace RandomQuotes
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            var quoteFilePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\data\quotes.txt");
+            var quoteFilePath = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot{Path.DirectorySeparatorChar}data{Path.DirectorySeparatorChar}quotes.txt");
             Quote.Quotes = File.Exists(quoteFilePath) ? File.ReadAllLines(quoteFilePath).Select(System.Net.WebUtility.HtmlDecode).ToList() : new List<string>();
-            var authorFilePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\data\authors.txt");
+            var authorFilePath = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot{Path.DirectorySeparatorChar}data{Path.DirectorySeparatorChar}authors.txt");
             Quote.Authors = File.Exists(authorFilePath) ? File.ReadAllLines(authorFilePath).Select(System.Net.WebUtility.HtmlDecode).ToList() : new List<string>();
         }
     }
