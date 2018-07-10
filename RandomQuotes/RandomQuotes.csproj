@@ -3,9 +3,13 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="DeployDatabase.ps1" />
     <None Remove="UpdateDatabase.sql" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DeployDatabase.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="UpdateDatabase.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
