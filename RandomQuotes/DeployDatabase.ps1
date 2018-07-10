@@ -19,8 +19,7 @@ Write-Host "Starting Database Deployment to $SqlServerName executing $SqlFilePat
 
 $results = @() 
 
-#-InputFile "C:\ScriptFolder\TestSqlCmd.sql" `
-Invoke-Sqlcmd -InputFile $SqlFilePath
+Invoke-Sqlcmd -InputFile $SqlFilePath `
 	-ServerInstance $SqlServerName `
 	-Database $SqlServerDatabaseName `
     -U $SqlServerUserName -P $SqlServerUserPassword
