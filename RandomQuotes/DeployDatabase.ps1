@@ -25,7 +25,7 @@ $results = @()
 Invoke-Sqlcmd -Query "select SERVERPROPERTY('ServerName') as Server, count(*) as 'DB Count' from sys.databases" `
 	-ServerInstance $SqlServerName `
 	-Database $SqlServerDatabaseName `
-    -U $SqlServerUserName -P "$SqlServerUserPassword"
+    -U $SqlServerUserName -P $SqlServerUserPassword
 
 # Print Results
 $results | Format-Table -autosize
