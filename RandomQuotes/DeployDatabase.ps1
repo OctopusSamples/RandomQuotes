@@ -15,14 +15,12 @@ Param (
 	[string]$SqlServerUserPassword
 )
  
-Write-Host "Starting Database Deployment to $SqlServerName"
-
-Write-Host "Executing $SqlFilePath against $SqlServerName\$SqlServerDatabaseName w/ $SqlServerUserName : $SqlServerUserPassword"
+Write-Host "Starting Database Deployment to $SqlServerName executing $SqlFilePath on $SqlServerDatabaseName..."
 
 $results = @() 
 
 #-InputFile "C:\ScriptFolder\TestSqlCmd.sql" `
-Invoke-Sqlcmd -Query "select SERVERPROPERTY('ServerName') as Server, count(*) as 'DB Count' from sys.databases" `
+Invoke-Sqlcmd -InputFile $SqlFilePath
 	-ServerInstance $SqlServerName `
 	-Database $SqlServerDatabaseName `
     -U $SqlServerUserName -P $SqlServerUserPassword
@@ -30,4 +28,4 @@ Invoke-Sqlcmd -Query "select SERVERPROPERTY('ServerName') as Server, count(*) as
 # Print Results
 $results | Format-Table -autosize
 
-Write-Host "Finished Database Deployment..."
+Write-Host "Finished Database Deployment."
