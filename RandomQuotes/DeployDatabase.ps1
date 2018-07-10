@@ -15,16 +15,16 @@ Param (
  
 Write-Host "Starting Database Deployment to $SqlServerName"
 
-#$results = @() 
+$results = @() 
 
 #-InputFile "C:\ScriptFolder\TestSqlCmd.sql" `
-#Invoke-Sqlcmd -Query "select SERVERPROPERTY('ServerName') as Server, count(*) as 'DB Count' from sys.databases" `
-#	-ServerInstance $instanceName `
-#    -U $db.user.name -P $db.user.password
+Invoke-Sqlcmd -Query "select SERVERPROPERTY('ServerName') as Server, count(*) as 'DB Count' from sys.databases" `
+	-ServerInstance $SqlServerName `
+    -U $SqlServerUserName -P $SqlServerUserPassword
 
-#$results += Invoke-Sqlcmd `
+$results += Invoke-Sqlcmd `
  
 # Print Results
-#$results | Format-Table -autosize
+$results | Format-Table -autosize
 
 Write-Host "Finished Database Deployment..."
