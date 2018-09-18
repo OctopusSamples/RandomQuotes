@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using RandomQuotes.Models;
 
 namespace RandomQuotes
@@ -57,6 +58,17 @@ namespace RandomQuotes
             Quote.Quotes = File.Exists(quoteFilePath) ? File.ReadAllLines(quoteFilePath).Select(System.Net.WebUtility.HtmlDecode).ToList() : new List<string>();
             var authorFilePath = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot{Path.DirectorySeparatorChar}data{Path.DirectorySeparatorChar}authors.txt");
             Quote.Authors = File.Exists(authorFilePath) ? File.ReadAllLines(authorFilePath).Select(System.Net.WebUtility.HtmlDecode).ToList() : new List<string>();
+
+            var service = app.ApplicationServices.GetService(typeof(IOptions<AppSettings>));
+            var settings = ((IOptions<AppSettings>)service).Value;
+
+            if (settings.AdditionalQuotes.Any())
+            {
+                Quote.Quotes.RemoveRange(5, Quote.Quotes.Count - 5);
+                Quote.Quotes.AddRange(settings.AdditionalQuotes.Select(x => x.Quote));
+                Quote.Authors.RemoveRange(5, Quote.Authors.Count - 5);
+                Quote.Authors.AddRange(settings.AdditionalQuotes.Select(x => x.Author));
+            }
         }
     }
 }

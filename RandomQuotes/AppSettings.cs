@@ -5,5 +5,12 @@
         public string AppVersion { get; set; }
         public string EnvironmentName { get; set; }
         public string TenantName { get; set; }
+        public QuoteRecord[] AdditionalQuotes { get; set; }
+    }
+
+    public class QuoteRecord
+    {
+        public string Quote { get; set; }
+        public string Author { get; set; }
     }
 }
