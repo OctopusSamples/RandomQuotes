@@ -43,6 +43,7 @@ jobs:
         -H "Authorization: token ${{ secrets.GithubToken }}"
         --data "{\"tag_name\": \"$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt)\", \"target_commitish\": \"master\", \"name\": \"$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt)\", \"body\": \"Automated release\", \"draft\": false, \"prerelease\": false}"
         "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases"
+        >> /home/runner/work/RandomQuotes/RandomQuotes/release.json
     - name: Upload Release
       run: >
         curl
@@ -51,4 +52,4 @@ jobs:
         -H "Authorization: token ${{ secrets.GithubToken }}"
         --upload-file "/home/runner/work/RandomQuotes/RandomQuotes/RandomQuotes.$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt).zip"
         --header "Content-Type:application/octet-stream"
-        "https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt)/assets?name=RandomQuotes.$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt).zip"
+        "https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/$(jq --raw-output '.id' /home/runner/work/RandomQuotes/RandomQuotes/release.json)/assets?name=RandomQuotes.$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt).zip"
