@@ -52,4 +52,3 @@ jobs:
         --upload-file "/home/runner/work/RandomQuotes/RandomQuotes/RandomQuotes.$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt).zip"
         --header "Content-Type:application/octet-stream"
         "https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt)/assets?name=RandomQuotes.$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt).zip"
-
