@@ -43,7 +43,7 @@ jobs:
         -XPOST
         -H "Authorization: token ${{ secrets.GithubToken }}"
         --data "{\"tag_name\": \"$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt)\", \"target_commitish\": \"master\", \"name\": \"$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt)\", \"body\": \"Automated release\", \"draft\": false, \"prerelease\": false}"
-        "https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/"
+        "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases"
     - name: Upload Release
       run: >
         curl
