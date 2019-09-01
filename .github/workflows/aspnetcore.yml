@@ -36,10 +36,13 @@ jobs:
         --id RandomQuotes
         --version $(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt)
         --format zip
-    - name: Upload
-      uses: skx/github-action-publish-binaries@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GithubToken }}
-      with:
-        args: '/home/runner/work/RandomQuotes/RandomQuotes/RandomQuotes*.zip'
+    - name: Upload Release
+      run: >
+        curl
+        -sSL
+        -XPOST
+        -H "Authorization: token ${{ secrets.GithubToken }}"
+        --upload-file "/home/runner/work/RandomQuotes/RandomQuotes/RandomQuotes.$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt).zip"
+        --header "Content-Type:application/octet-stream"
+        "https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)/assets?name=RandomQuotes.$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt).zip"
 
