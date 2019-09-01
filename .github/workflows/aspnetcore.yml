@@ -36,6 +36,14 @@ jobs:
         --id RandomQuotes
         --version $(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt)
         --format zip
+    - name: Create Release
+      run: >
+        curl
+        -sSL
+        -XPOST
+        -H "Authorization: token ${{ secrets.GithubToken }}"
+        --data "{\"tag_name\": \"$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)\", \"target_commitish\": \"master\", \"name\": \"$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt)\", \"body\": \"Automated release\", \"draft\": false, \"prerelease\": false}"
+        "https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/"
     - name: Upload Release
       run: >
         curl
