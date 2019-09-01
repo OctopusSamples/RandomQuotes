@@ -36,4 +36,10 @@ jobs:
         --id RandomQuotes
         --version $(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt)
         --format zip
+    - name: Upload
+      uses: skx/github-action-publish-binaries@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GithubToken }}
+      with:
+        args: '/home/runner/work/RandomQuotes/RandomQuotes/RandomQuotes*.zip'
 
