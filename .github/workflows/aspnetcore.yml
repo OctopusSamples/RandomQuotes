@@ -36,7 +36,7 @@ jobs:
       run: |
         curl \
         -sSL \
-        -XPOST
+        -XPOST \
         -H "Authorization: token ${{ secrets.GithubToken }}" \
         --data "{\"tag_name\": \"$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt)-dev\", \"target_commitish\": \"master\", \"name\": \"$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt)-dev\", \"body\": \"Automated release\", \"draft\": false, \"prerelease\": false}" \
         "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases"
