@@ -24,11 +24,11 @@ jobs:
       run: dotnet build --configuration Release
     - name: Publish with dotnet
       run: dotnet publish -o site --configuration Release
-    - name: Pack Application
+    - name: Pack DotNET App
       run: |
         cd /home/runner/work/RandomQuotes/RandomQuotes/RandomQuotes/site
         zip -r /home/runner/work/RandomQuotes/RandomQuotes/site.zip * 
-    - name: Pack Application
+    - name: Pack Beanstalk App
       run: >-
         /opt/octo/Octo pack .
         --outFolder /home/runner/work/RandomQuotes/RandomQuotes
