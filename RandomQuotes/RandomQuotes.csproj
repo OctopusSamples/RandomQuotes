@@ -12,17 +12,4 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="site\web.config" />
-    <_ContentIncludedByDefault Remove="site\appsettings.Development.json" />
-    <_ContentIncludedByDefault Remove="site\appsettings.json" />
-    <_ContentIncludedByDefault Remove="site\bundleconfig.json" />
-    <_ContentIncludedByDefault Remove="site\RandomQuotes.deps.json" />
-    <_ContentIncludedByDefault Remove="site\RandomQuotes.runtimeconfig.json" />
-    <_ContentIncludedByDefault Remove="site\wwwroot\lib\bootstrap\.bower.json" />
-    <_ContentIncludedByDefault Remove="site\wwwroot\lib\jquery-validation-unobtrusive\.bower.json" />
-    <_ContentIncludedByDefault Remove="site\wwwroot\lib\jquery-validation\.bower.json" />
-    <_ContentIncludedByDefault Remove="site\wwwroot\lib\jquery\.bower.json" />
-  </ItemGroup>
-
 </Project>
