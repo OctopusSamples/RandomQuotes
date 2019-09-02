@@ -28,7 +28,7 @@ jobs:
       run: >-
         /opt/octo/Octo pack .
         --outFolder /home/runner/work/RandomQuotes/RandomQuotes
-        --basePath /home/runner/work/RandomQuotes/RandomQuotes/site
+        --basePath /home/runner/work/RandomQuotes/RandomQuotes/RandomQuotes/site
         --id RandomQuotes
         --version $(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt)
         --format zip
