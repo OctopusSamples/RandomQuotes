@@ -1,7 +1,7 @@
 name: ASP.NET Core CI
 on: [push]
 jobs:
-build:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -32,21 +32,3 @@ build:
         --id RandomQuotes
         --version $(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt)
         --format zip
-    - name: Create Release
-      run: |
-        curl \
-        -sSL \
-        -XPOST \
-        -H "Authorization: token ${{ secrets.GithubToken }}" \
-        --data "{\"tag_name\": \"$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt)-dev\", \"target_commitish\": \"master\", \"name\": \"$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt)-dev\", \"body\": \"Automated release\", \"draft\": false, \"prerelease\": false}" \
-        "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases"
-        curl -XGET "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt)-dev" >> /home/runner/work/RandomQuotes/RandomQuotes/release.json
-    - name: Upload Release
-      run: >
-        curl
-        -sSL
-        -XPOST
-        -H "Authorization: token ${{ secrets.GithubToken }}"
-        --upload-file "/home/runner/work/RandomQuotes/RandomQuotes/RandomQuotes.$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt).zip"
-        --header "Content-Type:application/octet-stream"
-        "https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/$(jq --raw-output '.id' /home/runner/work/RandomQuotes/RandomQuotes/release.json)/assets?name=RandomQuotes.$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt).zip"
