@@ -24,17 +24,11 @@ jobs:
       run: dotnet build --configuration Release
     - name: Publish with dotnet
       run: dotnet publish -o site --configuration Release
-    - name: Pack DotNET App
-      run: |
-        cd /home/runner/work/RandomQuotes/RandomQuotes/RandomQuotes/site
-        zip -r /home/runner/work/RandomQuotes/RandomQuotes/site.zip * 
     - name: Pack Beanstalk App
       run: >-
         /opt/octo/Octo pack .
         --outFolder /home/runner/work/RandomQuotes/RandomQuotes
-        --basePath /home/runner/work/RandomQuotes/RandomQuotes
-        --include /home/runner/work/RandomQuotes/RandomQuotes/site.zip
-        --include /home/runner/work/RandomQuotes/RandomQuotes/aws-windows-deployment-manifest.json
+        --basePath /home/runner/work/RandomQuotes/RandomQuotes/site
         --id RandomQuotes
         --version $(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt)
         --format zip
