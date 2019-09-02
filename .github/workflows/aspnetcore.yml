@@ -34,8 +34,10 @@ jobs:
         --format zip
     - name: Push to Octopus
       run: >-
+        if [[ ! -z "${{ secrets.OctopusUrl }}" && ! -z "${{ secrets.OctopusApiKey }}" ]]; then 
         /opt/octo/Octo push
         --server ${{ secrets.OctopusUrl }}
         --apiKey ${{ secrets.OctopusApiKey }}
         --package /home/runner/work/RandomQuotes/RandomQuotes/RandomQuotes.$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt).zip
-        --overwrite-mode IgnoreIfExists
+        --overwrite-mode IgnoreIfExists;
+        fi
