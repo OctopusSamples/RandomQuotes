@@ -42,5 +42,5 @@ jobs:
         /opt/octo/Octo push
         --server ${{ secrets.OctopusUrl }}
         --apiKey ${{ secrets.OctopusApiKey }}
-        --package /home/runner/work/RandomQuotes/RandomQuotes/RandomQuotes.$(cat /home/runner/work/AWSSamExample/AWSSamExample/version.txt).zip
+        --package /home/runner/work/RandomQuotes/RandomQuotes/RandomQuotes.$(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt).zip
         --overwrite-mode IgnoreIfExists
