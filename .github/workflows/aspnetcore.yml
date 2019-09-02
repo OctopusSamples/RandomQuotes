@@ -32,6 +32,7 @@ jobs:
       run: >-
         /opt/octo/Octo pack .
         --outFolder /home/runner/work/RandomQuotes/RandomQuotes
+        --basePath /home/runner/work/RandomQuotes/RandomQuotes
         --include /home/runner/work/RandomQuotes/RandomQuotes/site.zip
         --include /home/runner/work/RandomQuotes/RandomQuotes/aws-windows-deployment-manifest.json
         --id RandomQuotes
