@@ -33,7 +33,7 @@ jobs:
         /opt/octo/Octo pack .
         --outFolder /home/runner/work/RandomQuotes/RandomQuotes
         --include /home/runner/work/RandomQuotes/RandomQuotes/site.zip
-        --include aws-windows-deployment-manifest.json
+        --include /home/runner/work/RandomQuotes/RandomQuotes/aws-windows-deployment-manifest.json
         --id RandomQuotes
         --version $(cat /home/runner/work/RandomQuotes/RandomQuotes/version.txt)
         --format zip
