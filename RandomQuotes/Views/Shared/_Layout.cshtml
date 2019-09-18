@@ -1,12 +1,19 @@
 ﻿@using Microsoft.Extensions.Options;
 @inject IOptions<AppSettings> Settings
+@{
+    var title = "Random Quotes";
+    if (!string.IsNullOrWhiteSpace(Settings.Value.TenantName))
+    {
+        title += $" - {Settings.Value.TenantName}";
+    }
+}
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - Random Quotes</title>
+    <title>@title</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css"/>
@@ -30,7 +37,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Random Quotes</a>
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">@title</a>
         </div>
     </div>
 </nav>
@@ -39,7 +46,7 @@
     @RenderBody()
     <hr/>
     <footer>
-        <p>&copy; 2018 - Random Quotes | Version @Settings.Value.AppVersion running in @Settings.Value.EnvironmentName</p>
+        <p>&copy; 2018 - @title | Version @Settings.Value.AppVersion running in @Settings.Value.EnvironmentName</p>
     </footer>
 </div>
 
