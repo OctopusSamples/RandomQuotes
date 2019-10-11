@@ -20,3 +20,23 @@
 <div class="btn btn-success btn-lg text-center">
     <a style="color:white" asp-action="ReloadPage"><span>Refresh</span></a>
 </div>
+
+<hr/>
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Suggest">
+            <div class="form-group">
+                <label for="newAuthorName" class="control-label">Author</label>
+                <input type="text" name="newAuthorName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="newQuoteText" class="control-label">Quote</label>
+                <input type="text" name="newQuoteText" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
