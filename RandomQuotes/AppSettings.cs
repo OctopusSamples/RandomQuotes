@@ -1,4 +1,4 @@
-﻿namespace RandomQuotes
+namespace RandomQuotes
 {
     public class AppSettings
     {

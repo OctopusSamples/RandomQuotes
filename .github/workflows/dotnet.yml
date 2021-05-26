@@ -1,0 +1,47 @@
+name: Build
+
+on:
+  push:
+    branches: [ dotnetfive ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet publish -o build 
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    - name: Install Octopus CLI 🐙
+      uses: OctopusDeploy/install-octopus-cli-action@v1.1.6
+      with:
+        version: latest
+    - name: Pack
+      run: octo pack --id="RandomQuotes" --format="zip" --version="1.0.${{github.run_number}}" --basePath="/home/runner/work/RandomQuotes/RandomQuotes/build/" --verbose
+    - name: Upload RandomQuotes Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: RandomQuotes
+        path: /home/runner/work/RandomQuotes/RandomQuotes/build/
+    - name: Push a package to Octopus Deploy 🐙
+      uses: OctopusDeploy/push-package-action@v1.0.1
+      with:
+        api_key: ${{ secrets.OCTOPUS_APIKEY }}
+        packages: "RandomQuotes.1.0.${{github.run_number}}.zip"
+        server: ${{ secrets.OCTOPUS_SERVER }}
+    - name: Create a release in Octopus Deploy 🐙
+      uses: OctopusDeploy/create-release-action@v1.0.2
+      with:
+        api_key: ${{ secrets.OCTOPUS_APIKEY }}
+        server: ${{ secrets.OCTOPUS_SERVER }}
+        project: "Projects-141"
+        deploy_to: "Dev"
