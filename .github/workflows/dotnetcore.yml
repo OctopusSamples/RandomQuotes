@@ -15,3 +15,27 @@ jobs:
         dotnet-version: 3.1.402
     - name: Build with dotnet
       run: dotnet build --configuration Release
+    - name: Publish with dotnet
+      run: dotnet publish --configuration Release  
+    - name: Create package
+      run: cd bin\Release\netcoreapp3.1\publish\; zip -r ../../../../randomquotes.0.1.${{ github.run_number }}.zip *
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: 0.1.${{ github.run_number }}
+        release_name: Release 0.1.${{ github.run_number }}
+        draft: false
+        prerelease: false
+    - name: Upload Release Asset
+      id: upload-release-asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: randomquotes.0.1.${{ github.run_number }}.zip
+        asset_name: randomquotes.0.1.${{ github.run_number }}.zip
+        asset_content_type: application/zip
