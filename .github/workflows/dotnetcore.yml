@@ -21,13 +21,13 @@ jobs:
       run: dotnet build --configuration Release
     - name: Publish with dotnet
       run: dotnet publish --configuration Release  
-    - name: Pack app
+    - name: Create nuget package
       run: octo pack --id randomquotes --version 0.1.${{ github.run_number }} --include RandomQuotes/bin/Release/netcoreapp3.1/publish/
-    - name: Create package
+    - name: Create zip package
       run: cd RandomQuotes/bin/Release/netcoreapp3.1/publish; zip -r ../../../../../randomquotes.0.1.${{ github.run_number }}.zip *
     - name: Install gpr
       run: dotnet tool install gpr -g
-    - name: Push app
+    - name: Push nuget app
       run: gpr push randomquotes.0.1.${{ github.run_number }}.nupkg --repository https://github.com/OctopusSamples/RandomQuotes -k ${{ secrets.GITHUB_TOKEN }}
     - name: Create Release
       id: create_release
