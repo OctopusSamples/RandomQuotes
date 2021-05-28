@@ -24,7 +24,7 @@ jobs:
     - name: Publish with dotnet
       run: dotnet publish --configuration Release  
     - name: Pack app
-      run: octo pack --id randomquotes --version 0.1.${{ github.run_number }} --include RandomQuotes\bin\Release\netcoreapp2.2\publish\
+      run: octo pack --id randomquotes --version 0.1.${{ github.run_number }} --include RandomQuotes/bin/Release/netcoreapp3.1/publish/
     - name: Create package
       run: cd RandomQuotes/bin/Release/netcoreapp3.1/publish; zip -r ../../../../../randomquotes.0.1.${{ github.run_number }}.zip *
     - name: Push app
