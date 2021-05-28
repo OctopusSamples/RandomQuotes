@@ -8,8 +8,9 @@ steps "Deploy an Azure App Service" {
         action_type = "Octopus.AzureAppService"
         properties = {
             Octopus.Action.Azure.DeploymentType = "Package"
+            Octopus.Action.EnabledFeatures = "Octopus.Features.JsonConfigurationVariables,Octopus.Features.ConfigurationTransforms,Octopus.Features.SubstituteInFiles"
             Octopus.Action.Package.DownloadOnTentacle = "False"
-            Octopus.Action.Package.FeedId = "Octopus Server (built-in)"
+            Octopus.Action.Package.FeedId = "OctopusSamples"
             Octopus.Action.Package.PackageId = "randomquotes"
             Octopus.Action.RunOnServer = "true"
         }
@@ -18,7 +19,7 @@ steps "Deploy an Azure App Service" {
 
         packages {
             acquisition_location = "Server"
-            feed_id_or_name = "Octopus Server (built-in)"
+            feed_id_or_name = "OctopusSamples"
             package_id = "randomquotes"
             properties = {
                 SelectionMode = "immediate"
