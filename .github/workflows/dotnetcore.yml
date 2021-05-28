@@ -17,8 +17,6 @@ jobs:
       uses: OctopusDeploy/install-octopus-cli-action@v1.1.6
       with:
         version: latest
-    - name: Log into nuget
-      run: dotnet nuget add source --username mcasperson --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/OctopusSamples/index.json"
     - name: Build with dotnet
       run: dotnet build --configuration Release
     - name: Publish with dotnet
@@ -27,8 +25,10 @@ jobs:
       run: octo pack --id randomquotes --version 0.1.${{ github.run_number }} --include RandomQuotes/bin/Release/netcoreapp3.1/publish/
     - name: Create package
       run: cd RandomQuotes/bin/Release/netcoreapp3.1/publish; zip -r ../../../../../randomquotes.0.1.${{ github.run_number }}.zip *
+    - name: Install gpr
+      run: dotnet tool install gpr -g
     - name: Push app
-      run: dotnet nuget push randomquotes.0.1.${{ github.run_number }}.nupkg --source "github"
+      run: gpr push randomquotes.0.1.${{ github.run_number }}.nupkg --repository https://github.com/OctopusSamples/RandomQuotes -k ${{ secrets.GITHUB_TOKEN }}
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
