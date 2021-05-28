@@ -1,0 +1,29 @@
+steps "Deploy an Azure App Service" {
+    properties = {
+        Octopus.Action.TargetRoles = "webapp"
+    }
+
+
+    actions "Deploy an Azure App Service" {
+        action_type = "Octopus.AzureAppService"
+        properties = {
+            Octopus.Action.Azure.DeploymentType = "Package"
+            Octopus.Action.Package.DownloadOnTentacle = "False"
+            Octopus.Action.Package.FeedId = "Octopus Server (built-in)"
+            Octopus.Action.Package.PackageId = "randomquotes"
+            Octopus.Action.RunOnServer = "true"
+        }
+
+        worker_pool_id_or_name = "Hosted Ubuntu"
+
+        packages {
+            acquisition_location = "Server"
+            feed_id_or_name = "Octopus Server (built-in)"
+            package_id = "randomquotes"
+            properties = {
+                SelectionMode = "immediate"
+            }
+
+        }
+    }
+}
