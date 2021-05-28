@@ -18,7 +18,7 @@ jobs:
       with:
         version: latest
     - name: Log into nuget
-      run: dotnet nuget add source --username mcasperson --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/OctopusSamples/index.json
+      run: dotnet nuget add source --username mcasperson --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/OctopusSamples/index.json"
     - name: Build with dotnet
       run: dotnet build --configuration Release
     - name: Publish with dotnet
