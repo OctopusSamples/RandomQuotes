@@ -13,5 +13,15 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 2.2.108
+    - name: Install Octopus CLI 🐙
+      uses: OctopusDeploy/install-octopus-cli-action@v1.1.6
+      with:
+        version: latest
+    - name: Log into nuget
+      run: dotnet nuget add source --username mcasperson --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/OctopusSamples/index.json
     - name: Build with dotnet
       run: dotnet build --configuration Release
+    - name: Pack app
+      run: octo pack --id randomquotes --version 0.1.${{ github.run_number }} --include RandomQuotes\bin\Release\netcoreapp2.2\publish\
+    - name: Pack app
+      run: dotnet nuget push randomquotes.0.1.${{ github.run_number }}.nupkg --source "github"
