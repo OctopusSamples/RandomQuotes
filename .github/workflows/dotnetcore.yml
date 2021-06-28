@@ -17,15 +17,8 @@ jobs:
       uses: OctopusDeploy/install-octopus-cli-action@v1.1.6
       with:
         version: latest
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
-    - name: Publish with dotnet
-      run: dotnet publish --configuration Release  
-    - name: Create nuget package
-      run: octo pack --id randomquotes --version 0.1.${{ github.run_number }} --include RandomQuotes/bin/Release/netcoreapp3.1/publish/
-    - name: Create zip package
-      run: cd RandomQuotes/bin/Release/netcoreapp3.1/publish; zip -r ../../../../../randomquotes.0.1.${{ github.run_number }}.zip *
-    - name: Artifactory
-    - uses: jfrog/setup-jfrog-cli@v1
+    - name: Install jfrog
+    - Uses: jfrog/setup-jfrog-cli@v1
     - run: jfrog --version
+
 
