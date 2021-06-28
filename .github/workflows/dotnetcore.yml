@@ -19,5 +19,6 @@ jobs:
         version: latest
     - name: Install jfrog
       uses: jfrog/setup-jfrog-cli@v1
+      run: jfrog --version
 
 
