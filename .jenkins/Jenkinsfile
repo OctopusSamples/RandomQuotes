@@ -1,0 +1,41 @@
+pipeline{
+  agent any
+
+  environment {
+    // Primary .csproj location
+    projectLocation = "RandomQuotes\\RandomQuotes.csproj"
+    // Default publish location
+    publishedPath = ".\\RandomQuotes\\bin\\Debug\\net5.0\\publish\\"
+    // Git location for checkout
+    gitUrl = "https://github.com/OctopusSamples/RandomQuotes.git"
+    // Branch for checkout
+    gitBranch = "config-as-code-walkthrough"
+    // ServerId from Configure System -> Octopus Deploy Plugin
+    octopusServerId = "NewLocal"
+  }
+
+  stages{
+
+    stage('Prep - Clean/Checkout'){
+      steps{
+          cleanWs deleteDirs: true
+          git credentialsId: 'GitHub-PAT', url: "${env.gitUrl}", branch: 'main'
+      }
+    } 
+
+    stage('Dotnet - Restore/Clean/Build/Publish'){
+      steps{
+        bat "dotnet restore ${env.projectLocation}"
+        bat "dotnet clean ${env.projectLocation}"
+        bat "dotnet publish ${env.projectLocation}"
+      }
+    }
+
+    stage('Octopus'){
+      steps{
+          octopusPack additionalArgs: '', includePaths: '', outputPath: '', packageFormat: 'zip', packageId: "${JOB_NAME}", packageVersion: "${BUILD_NUMBER}", sourcePath: "${publishedPath}", toolId: 'Default', verboseLogging: true
+          octopusPushPackage additionalArgs: '', overwriteMode: 'FailIfExists', packagePaths: "${JOB_NAME}.${BUILD_NUMBER}.zip", serverId: "${octopusServerId}", spaceId: 'Spaces-1', toolId: 'Default'
+      }
+    }
+  }
+}
