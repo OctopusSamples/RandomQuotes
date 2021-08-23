@@ -19,7 +19,7 @@ pipeline{
     stage('Prep - Clean/Checkout'){
       steps{
           cleanWs deleteDirs: true
-          git credentialsId: 'GitHub-PAT', url: "${env.gitUrl}", branch: 'main'
+        git credentialsId: 'GitHub-PAT', url: "${env.gitUrl}", branch: "${env.gitBranch}"
       }
     } 
 
