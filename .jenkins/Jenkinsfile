@@ -5,7 +5,7 @@ pipeline{
     // Primary .csproj location
     projectLocation = "RandomQuotes\\RandomQuotes.csproj"
     // Default publish location
-    publishedPath = ".\\RandomQuotes\\bin\\Debug\\net5.0\\publish\\"
+    publishedPath = ".\\RandomQuotes\\bin\\Debug\\netcoreapp3.1\\publish\\"
     // Git location for checkout
     gitUrl = "https://github.com/OctopusSamples/RandomQuotes.git"
     // Branch for checkout
