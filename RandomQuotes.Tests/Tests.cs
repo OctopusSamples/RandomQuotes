@@ -14,7 +14,7 @@ namespace RandomQuotes.Tests
         [Test]
         public void Test1()
         {
-            Assert.True(Quote.GetRandomQuote().QuoteText != "Something went wrong");
+            Assert.True(false);
         }
     }
 }
