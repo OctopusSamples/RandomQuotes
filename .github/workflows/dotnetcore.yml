@@ -72,7 +72,7 @@ jobs:
           --version ${{ steps.determine_version.outputs.semVer }} \
           --format zip \
           --overwrite
-          packages=(${packages[@]} "${path}/${projectname}.${{ steps.determine_version.outputs.semVer }}.zip")
+          packages=(${packages[@]} "${projectname}.${{ steps.determine_version.outputs.semVer }}.zip")
         done
         # Join the array with commas
         printf -v joined "%s," "${packages[@]}"
