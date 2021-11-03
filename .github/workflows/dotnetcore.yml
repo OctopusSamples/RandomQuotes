@@ -66,7 +66,8 @@ jobs:
         eval uniquepaths=($(printf "%s\n" "${paths[@]}" | sort -u))
         for i in "${uniquepaths[@]}"; do
           echo $i
-        done# For each publish dir, create a package
+        done
+        # For each publish dir, create a package
         packages=()
         for path in "${uniquepaths[@]}"; do
           # Get the directory name four deep, which is typically the project folder
