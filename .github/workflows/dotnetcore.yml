@@ -92,7 +92,8 @@ jobs:
         # Multiline strings require some care in a workflow
         joinednewline="${joinednewline//'%'/'%25'}"
         joinednewline="${joinednewline//$'\n'/'%0A'}"
-        joinednewline="${joinednewline//$'\r'/'%0D'}"# Save the list of packages newline separated as an output variable
+        joinednewline="${joinednewline//$'\r'/'%0D'}"
+        # Save the list of packages newline separated as an output variable
         echo "::set-output name=artifacts_new_line::${joinednewline%\n}"
     - name: Create Release
       uses: softprops/action-gh-release@v1
