@@ -5,7 +5,7 @@ jobs:
     - uses: actions/checkout@v1
       with:
         fetch-depth: '0'
-    - name: Setup .NET Core
+    - name: Set up DotNET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.402
@@ -42,14 +42,14 @@ jobs:
     - name: Test
       run: dotnet test -l:trx || true
       shell: bash
-    - name: Test Report
+    - if: always()
+      name: Report
       uses: dorny/test-reporter@v1
-      if: always()
       with:
         name: DotNET Tests
-        path: "**/*.trx"                            
+        path: '**/*.trx'
         reporter: dotnet-trx
-        fail-on-error: "false"
+        fail-on-error: 'false'
     - name: Publish
       run: dotnet publish --configuration Release /p:AssemblyVersion=${{ steps.determine_version.outputs.semVer }}
     - id: package
@@ -58,16 +58,15 @@ jobs:
         # Find the publish directories
         shopt -s globstar
         paths=()
-        for i in **/publish/*.dll; do 
+        for i in **/publish/*.dll; do
           dir=${i%/*}
           echo ${dir}
-          paths=(${paths[@]} ${dir}); 
+          paths=(${paths[@]} ${dir});
         done
         eval uniquepaths=($(printf "%s\n" "${paths[@]}" | sort -u))
         for i in "${uniquepaths[@]}"; do
           echo $i
-        done
-        # For each publish dir, create a package
+        done# For each publish dir, create a package
         packages=()
         for path in "${uniquepaths[@]}"; do
           # Get the directory name four deep, which is typically the project folder
@@ -89,13 +88,12 @@ jobs:
         echo "::set-output name=artifacts::${joined%,}"
         # Do the same again, but use new lines as the separator
         printf -v joinednewline "%s\n" "${packages[@]}"
+        # https://trstringer.com/github-actions-multiline-strings/
+        # Multiline strings require some care in a workflow
         joinednewline="${joinednewline//'%'/'%25'}"
         joinednewline="${joinednewline//$'\n'/'%0A'}"
-        joinednewline="${joinednewline//$'\r'/'%0D'}"
-        # Save the list of packages newline separated as an output variable
+        joinednewline="${joinednewline//$'\r'/'%0D'}"# Save the list of packages newline separated as an output variable
         echo "::set-output name=artifacts_new_line::${joinednewline%\n}"
-    - run: 'echo "The string is: ${{ steps.package.outputs.artifacts_new_line }}"'
-      shell: bash
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
