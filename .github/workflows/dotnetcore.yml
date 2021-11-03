@@ -90,8 +90,8 @@ jobs:
         # Do the same again, but use new lines as the separator
         printf -v joinednewline "%s\n" "${packages[@]}"
         joinednewline="${joinednewline//'%'/'%25'}"
-        joinednewline="${joinednewline//$'\\n'/'%0A'}"
-        joinednewline="${joinednewline//$'\\r'/'%0D'}"
+        joinednewline="${joinednewline//$'\n'/'%0A'}"
+        joinednewline="${joinednewline//$'\r'/'%0D'}"
         # Save the list of packages newline separated as an output variable
         echo "::set-output name=artifacts_new_line::${joinedNewLine%\n}"
     - name: Create Release
