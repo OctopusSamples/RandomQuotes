@@ -42,14 +42,14 @@ jobs:
     - name: Test
       run: dotnet test -l:trx || true
       shell: bash
-    - if: always()
-      name: Report
+    - name: Test Report
       uses: dorny/test-reporter@v1
+      if: always()
       with:
         name: DotNET Tests
-        path: results.xml
-        reporter: java-junit
-        fail-on-error: 'false'
+        path: "**/test-results.trx"                            
+        reporter: dotnet-trx
+        fail-on-error: "false"
     - name: Publish
       run: dotnet publish --configuration Release /p:AssemblyVersion=${{ steps.determine_version.outputs.semVer }}
     - id: package
