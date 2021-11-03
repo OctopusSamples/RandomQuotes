@@ -62,7 +62,7 @@ jobs:
         packages=()
         for path in "${uniquepaths}"; do
           # Get the directory name four deep, which is typically the project folder
-          dir=$(pwd)/../../../..
+          dir=${path}/../../../..
           parentdir=$(builtin cd $dir; pwd)
           projectname=${parentdir##*/}
           # Package the published files
@@ -86,7 +86,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: ${{ steps.package.outputs.artifacts_new_line }}
-        tag: ${{ steps.determine_version.outputs.semVer }}.${{ github.run_number }}
+        tag_name: ${{ steps.determine_version.outputs.semVer }}.${{ github.run_number }}
         draft: 'false'
         prerelease: 'false'
     - name: Push to Octopus
