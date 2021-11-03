@@ -94,6 +94,8 @@ jobs:
         joinednewline="${joinednewline//$'\r'/'%0D'}"
         # Save the list of packages newline separated as an output variable
         echo "::set-output name=artifacts_new_line::${joinedNewLine%\n}"
+    - run: echo "The string is: ${{ steps.package.outputs.artifacts_new_line }}"
+      chell: bash
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
