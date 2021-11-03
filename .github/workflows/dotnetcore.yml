@@ -69,7 +69,7 @@ jobs:
         done
         # For each publish dir, create a package
         packages=()
-        for path in "${uniquepaths}"; do
+        for path in "${uniquepaths[@]}"; do
           # Get the directory name four deep, which is typically the project folder
           dir=${path}/../../../..
           parentdir=$(builtin cd $dir; pwd)
