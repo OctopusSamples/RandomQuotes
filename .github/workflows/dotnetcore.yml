@@ -56,12 +56,17 @@ jobs:
       name: Package
       run: |-
         # Find the publish directories
-        shopt -s globstar; paths=(); for i in **/publish/*.dll; do 
+        shopt -s globstar
+        paths=()
+        for i in **/publish/*.dll; do 
           dir=${i%/*}
           echo ${dir}
           paths=(${paths[@]} ${dir}); 
         done
         eval uniquepaths=($(printf "%s\n" "${paths[@]}" | sort -u))
+        for i in "${uniquepaths[@]}"; do
+          echo $i
+        done
         # For each publish dir, create a package
         packages=()
         for path in "${uniquepaths}"; do
