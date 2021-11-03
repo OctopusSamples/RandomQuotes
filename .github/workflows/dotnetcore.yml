@@ -91,6 +91,7 @@ jobs:
         printf -v joinednewline "%s\n" "${packages[@]}"
         # Save the list of packages newline separated as an output variable
         echo "::set-output name=artifacts_new_line::${joinedNewLine%,}"
+        echo "${joinedNewLine%,}"
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
