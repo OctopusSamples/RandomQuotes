@@ -61,7 +61,7 @@ jobs:
         for i in **/publish/*.dll; do
           dir=${i%/*}
           echo ${dir}
-          paths=(${paths[@]} ${dir});
+          paths=(${paths[@]} ${dir})
         done
         eval uniquepaths=($(printf "%s\n" "${paths[@]}" | sort -u))
         for i in "${uniquepaths[@]}"; do
