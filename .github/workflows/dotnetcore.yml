@@ -1,51 +1,117 @@
-name: .NET Core
-
-on: [push]
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
+      with:
+        fetch-depth: '0'
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.402
-    - name: Install Octopus CLI 🐙
-      uses: OctopusDeploy/install-octopus-cli-action@v1.1.6
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.7
+      with:
+        versionSpec: 5.x
+    - id: determine_version
+      name: Determine Version
+      uses: gittools/actions/gitversion/execute@v0.9.7
+    - name: Install Octopus Deploy CLI
+      uses: OctopusDeploy/install-octocli@v1.1.1
       with:
         version: latest
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
-    - name: Publish with dotnet
-      run: dotnet publish --configuration Release  
-    - name: Create nuget package
-      run: octo pack --id randomquotes --version 0.1.${{ github.run_number }} --include RandomQuotes/bin/Release/netcoreapp3.1/publish/
-    - name: Create zip package
-      run: cd RandomQuotes/bin/Release/netcoreapp3.1/publish; zip -r ../../../../../randomquotes.0.1.${{ github.run_number }}.zip *
-    - name: Install gpr
-      run: dotnet tool install gpr -g
-    - name: Push nuget app
-      run: gpr push randomquotes.0.1.${{ github.run_number }}.nupkg --repository https://github.com/OctopusSamples/RandomQuotes -k ${{ secrets.GITHUB_TOKEN }}
+    - name: Install Dependencies
+      run: dotnet restore
+      shell: bash
+    - name: List Dependencies
+      run: dotnet list package > dependencies.txt
+      shell: bash
+    - name: Collect Dependencies
+      uses: actions/upload-artifact@v2
+      with:
+        name: Dependencies
+        path: dependencies.txt
+    - name: List Dependency Updates
+      run: dotnet list package --outdated > dependencyUpdates.txt
+      shell: bash
+    - name: Collect Dependency Updates
+      uses: actions/upload-artifact@v2
+      with:
+        name: Dependencies Updates
+        path: dependencyUpdates.txt
+    - name: Test
+      run: dotnet test -l:trx || true
+      shell: bash
+    - if: always()
+      name: Report
+      uses: dorny/test-reporter@v1
+      with:
+        name: DotNET Tests
+        path: results.xml
+        reporter: java-junit
+        fail-on-error: 'false'
+    - name: Publish
+      run: dotnet publish --configuration Release /p:AssemblyVersion=${{ steps.determine_version.outputs.semVer }}
+    - id: package
+      name: Package
+      run: |-
+        # Find the publish directories
+        shopt -s globstar; paths=(); for i in **/publish/*.dll; do paths=(${paths[@]} ${i%/*}); done
+        eval uniquepaths=($(printf "%s\n" "${paths[@]}" | sort -u))
+        # For each publish dir, create a package
+        packages=()
+        for path in "${uniquepaths}"; do
+          # Get the directory name four deep, which is typically the project folder
+          dir=$(pwd)/../../../..
+          parentdir=$(builtin cd $dir; pwd)
+          projectname=${parentdir##*/}
+          # Package the published files
+          octo pack \
+          --basePath ${path} \
+          --id ${projectname} \
+          --version ${{ steps.determine_version.outputs.semVer }} \
+          --format zip \
+          --overwrite
+          packages=(${packages[@]} "${path}/${projectname}.${{ steps.determine_version.outputs.semVer }}.zip)")
+        done
+        # Join the array with commas
+        printf -v joined "%s," "${packages[@]}"
+        # Save the list of packages as an output variable
+        echo "::set-output name=artifacts::${joined%,}"
+        # Do the same again, but use new lines as the separator
+        printf -v joinednewline "%s\n" "${packages[@]}"
+        # Save the list of packages newline separated as an output variable
+        echo "::set-output name=artifacts_new_line::${joinedNewLine%,}"
     - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v1
       with:
-        tag_name: 0.1.${{ github.run_number }}
-        release_name: Release 0.1.${{ github.run_number }}
-        draft: false
-        prerelease: false
-    - name: Upload Release Asset
-      id: upload-release-asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        files: ${{ steps.package.outputs.artifacts_new_line }}
+        tag: ${{ steps.determine_version.outputs.semVer }}.${{ github.run_number }}
+        draft: 'false'
+        prerelease: 'false'
+    - name: Push to Octopus
+      uses: OctopusDeploy/push-package-action@v1.1.1
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: randomquotes.0.1.${{ github.run_number }}.zip
-        asset_name: randomquotes.0.1.${{ github.run_number }}.zip
-        asset_content_type: application/zip
+        api_key: ${{ secrets.OCTOPUS_API_TOKEN }}
+        packages: ${{ steps.package.outputs.artifacts }}
+        server: ${{ secrets.OCTOPUS_SERVER_URL }}
+    - name: Generate Octopus Deploy build information
+      uses: xo-energy/action-octopus-build-information@v1.1.2
+      with:
+        octopus_api_key: ${{ secrets.OCTOPUS_API_TOKEN }}
+        octopus_project: RandomQuotes
+        octopus_server: ${{ secrets.OCTOPUS_SERVER_URL }}
+        push_version: ${{ steps.determine_version.outputs.semVer }}
+        push_package_ids: RandomQuotes
+        output_path: octopus
+    - name: Create Octopus Release
+      uses: OctopusDeploy/create-release-action@v1.1.1
+      with:
+        api_key: ${{ secrets.OCTOPUS_API_TOKEN }}
+        project: RandomQuotes
+        server: ${{ secrets.OCTOPUS_SERVER_URL }}
+        deploy_to: Development
+name: DotNET Core Build
+'on':
+  workflow_dispatch: {}
+  push: {}
