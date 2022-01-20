@@ -1,3 +1,13 @@
+# The following workflow provides an opinionated template you can customize for your own needs.
+#
+# To configure Octopus, set the OCTOPUS_API_TOKEN secret to the Octopus API key, and
+# set the OCTOPUS_SERVER_URL secret to the Octopus URL.
+#
+# Double check the "project" and "deploy_to" properties in the "Create Octopus Release" step
+# match your Octopus projects and environments.
+#
+# Get a trial Octopus instance from https://octopus.com/start
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,6 +26,8 @@ jobs:
     - id: determine_version
       name: Determine Version
       uses: gittools/actions/gitversion/execute@v0.9.7
+      with:
+        additionalArguments: /overrideconfig mode=Mainline
     - name: Install Octopus Deploy CLI
       uses: OctopusDeploy/install-octocli@v1.1.1
       with:
@@ -51,10 +63,10 @@ jobs:
         reporter: dotnet-trx
         fail-on-error: 'false'
     - name: Publish
-      run: dotnet publish --configuration Release /p:AssemblyVersion=${{ steps.determine_version.outputs.semVer }}
+      run: dotnet publish --configuration Release /p:AssemblyVersion=${{ steps.determine_version.outputs.assemblySemVer }}
     - id: package
       name: Package
-      run: |-
+      run: |
         # Find the publish directories
         shopt -s globstar
         paths=()
@@ -69,6 +81,7 @@ jobs:
         done
         # For each publish dir, create a package
         packages=()
+        versions=()
         for path in "${uniquepaths[@]}"; do
           # Get the directory name four deep, which is typically the project folder
           dir=${path}/../../../..
@@ -82,6 +95,7 @@ jobs:
           --format zip \
           --overwrite
           packages=(${packages[@]} "${projectname}.${{ steps.determine_version.outputs.semVer }}.zip")
+          versions=(${versions[@]} "${projectname}:${{ steps.determine_version.outputs.semVer }}")
         done
         # Join the array with commas
         printf -v joined "%s," "${packages[@]}"
@@ -94,21 +108,34 @@ jobs:
         joinednewline="${joinednewline//'%'/'%25'}"
         joinednewline="${joinednewline//$'\n'/'%0A'}"
         joinednewline="${joinednewline//$'\r'/'%0D'}"
+        # Now build a new line separated list of versions
+        printf -v versionsjoinednewline "%s\n" "${versions[@]}"
+        versionsjoinednewline="${versionsjoinednewline//'%'/'%25'}"
+        versionsjoinednewline="${versionsjoinednewline//$'\n'/'%0A'}"
+        versionsjoinednewline="${versionsjoinednewline//$'\r'/'%0D'}"
         # Save the list of packages newline separated as an output variable
         echo "::set-output name=artifacts_new_line::${joinednewline%\n}"
+        echo "::set-output name=versions_new_line::${versionsjoinednewline%\n}"
+    - name: Tag Release
+      uses: mathieudutour/github-tag-action@v6.0
+      with:
+        custom_tag: ${{ steps.determine_version.outputs.semVer }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
         files: ${{ steps.package.outputs.artifacts_new_line }}
-        tag_name: ${{ steps.determine_version.outputs.semVer }}.${{ github.run_number }}
+        tag_name: ${{ steps.determine_version.outputs.semVer }}+run${{ github.run_number }}-attempt${{ github.run_attempt }}
         draft: 'false'
         prerelease: 'false'
+        target_commitish: ${{ github.sha }}
     - name: Push to Octopus
       uses: OctopusDeploy/push-package-action@v1.1.1
       with:
         api_key: ${{ secrets.OCTOPUS_API_TOKEN }}
         packages: ${{ steps.package.outputs.artifacts }}
         server: ${{ secrets.OCTOPUS_SERVER_URL }}
+        overwrite_mode: OverwriteExisting
     - name: Generate Octopus Deploy build information
       uses: xo-energy/action-octopus-build-information@v1.1.2
       with:
@@ -117,6 +144,7 @@ jobs:
         octopus_server: ${{ secrets.OCTOPUS_SERVER_URL }}
         push_version: ${{ steps.determine_version.outputs.semVer }}
         push_package_ids: RandomQuotes
+        push_overwrite_mode: OverwriteExisting
         output_path: octopus
     - name: Create Octopus Release
       uses: OctopusDeploy/create-release-action@v1.1.1
@@ -125,6 +153,7 @@ jobs:
         project: RandomQuotes
         server: ${{ secrets.OCTOPUS_SERVER_URL }}
         deploy_to: Development
+        packages: ${{ steps.package.outputs.versions_new_line }}
 name: DotNET Core Build
 'on':
   workflow_dispatch: {}
