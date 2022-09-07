@@ -1,2 +1,2 @@
-# Random Quotes
-Fun random quotes web app.  App is built using Microsoft's ASP.NET core framework and it's very simple.
+# Random BAD Quotes
+Forked from Random Quotes for the purposes of writing vulnerable code to test secure code analysis solutions.
