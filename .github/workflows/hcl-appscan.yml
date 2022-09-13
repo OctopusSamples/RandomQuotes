@@ -1,5 +1,7 @@
 name: "HCL AppScan CodeSweep"
 on:
+  push:
+    branches: [ "master" ]
   pull_request:
     types: [opened,synchronize]
 jobs:
