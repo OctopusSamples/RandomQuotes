@@ -57,10 +57,11 @@ jobs:
         packages=()
         versions=()
         for path in "${uniquepaths[@]}"; do
-          # Get the directory name four deep, which is typically the project folder
+          # Get the directory name four deep, which is typically the project folder.
+          # The directory name is used to name the package.
           dir=${path}/../../../..
           parentdir=$(builtin cd $dir; pwd)
-          projectname=RandomQuotes
+          projectname=${parentdir##*/}
           # Package the published files
           octo pack \
           --basePath ${path} \
@@ -76,19 +77,13 @@ jobs:
         # Save the list of packages as an output variable
         echo "::set-output name=artifacts::${joined%,}"
         # Do the same again, but use new lines as the separator
-        printf -v joinednewline "%s\n" "${packages[@]}"
         # https://trstringer.com/github-actions-multiline-strings/
         # Multiline strings require some care in a workflow
-        joinednewline="${joinednewline//'%'/'%25'}"
-        joinednewline="${joinednewline//$'\n'/'%0A'}"
-        joinednewline="${joinednewline//$'\r'/'%0D'}"
-        # Now build a new line separated list of versions
         printf -v versionsjoinednewline "%s\n" "${versions[@]}"
         versionsjoinednewline="${versionsjoinednewline//'%'/'%25'}"
         versionsjoinednewline="${versionsjoinednewline//$'\n'/'%0A'}"
         versionsjoinednewline="${versionsjoinednewline//$'\r'/'%0D'}"
         # Save the list of packages newline separated as an output variable
-        echo "::set-output name=artifacts_new_line::${joinednewline%\n}"
         echo "::set-output name=versions_new_line::${versionsjoinednewline%\n}"
     - name: Push to Octopus
       uses: OctopusDeploy/push-package-action@v1.1.1
