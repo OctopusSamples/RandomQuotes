@@ -1,3 +1,5 @@
+# For a detailed breakdown of this workflow, see https://octopus.com/docs/guides/deploy-aspnetcore-app/to-iis/using-octopus-onprem-github-builtin
+#
 # The following workflow provides an opinionated template you can customize for your own needs.
 #
 # If you are not an Octopus user, the "Push to Octopus", "Generate Octopus Deploy build information",
@@ -11,6 +13,10 @@
 #
 # Get a trial Octopus instance from https://octopus.com/start
 
+name: DotNET Core Build
+'on':
+  workflow_dispatch: {}
+  push: {}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -141,19 +147,19 @@ jobs:
         draft: 'false'
         prerelease: 'false'
         target_commitish: ${{ github.sha }}
-    - env:
+    - name: Push packages to Octopus Deploy
+      uses: OctopusDeploy/push-package-action@v2
+      env:
         OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_TOKEN }}
         OCTOPUS_HOST: ${{ secrets.OCTOPUS_SERVER_URL }}
-      name: Push packages to Octopus Deploy
-      uses: OctopusDeploy/push-package-action@v2
       with:
         packages: ${{ steps.package.outputs.artifacts }}
         overwrite_mode: OverwriteExisting
-    - env:
+    - name: Generate Octopus Deploy build information
+      uses: OctopusDeploy/push-build-information-action@v1
+      env:
         OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_TOKEN }}
         OCTOPUS_HOST: ${{ secrets.OCTOPUS_SERVER_URL }}
-      name: Generate Octopus Deploy build information
-      uses: OctopusDeploy/push-build-information-action@v1
       with:
         version: ${{ steps.determine_version.outputs.semVer }}
         packages: RandomQuotes
@@ -166,7 +172,3 @@ jobs:
         server: ${{ secrets.OCTOPUS_SERVER_URL }}
         deploy_to: Development
         packages: ${{ steps.package.outputs.versions_new_line }}
-name: DotNET Core Build
-'on':
-  workflow_dispatch: {}
-  push: {}
