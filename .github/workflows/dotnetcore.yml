@@ -19,7 +19,7 @@ jobs:
       with:
         additionalArguments: /overrideconfig mode=Mainline
     - name: Install Octopus Deploy CLI
-      uses: OctopusDeploy/install-octocli@v1.1.1
+      uses: OctopusDeploy/install-octopus-cli-action@v1
       with:
         version: latest
     - name: Install Dependencies
@@ -85,21 +85,14 @@ jobs:
         versionsjoinednewline="${versionsjoinednewline//$'\r'/'%0D'}"
         # Save the list of packages newline separated as an output variable
         echo "::set-output name=versions_new_line::${versionsjoinednewline%\n}"
-    - name: Push to Octopus
-      uses: OctopusDeploy/push-package-action@v1.1.1
+    - name: Push packages to Octopus Deploy 🐙
+      uses: OctopusDeploy/push-package-action@v2
+      env:
+        OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_TOKEN }}
+        OCTOPUS_HOST: ${{ secrets.OCTOPUS_SERVER_URL }}
       with:
-        api_key: ${{ secrets.OCTOPUS_API_TOKEN }}
-        packages: ${{ steps.package.outputs.artifacts }}
-        server: ${{ secrets.OCTOPUS_SERVER_URL }}
         overwrite_mode: OverwriteExisting
-    - name: Create Octopus Release
-      uses: OctopusDeploy/create-release-action@v1.1.1
-      with:
-        api_key: ${{ secrets.OCTOPUS_API_TOKEN }}
-        project: Random Quotes
-        server: ${{ secrets.OCTOPUS_SERVER_URL }}
-        deploy_to: Dev
-        packages: ${{ steps.package.outputs.versions_new_line }}
+        packages: ${{ steps.package.outputs.artifacts }}
 name: DotNET Core Build
 'on':
   workflow_dispatch: {}
