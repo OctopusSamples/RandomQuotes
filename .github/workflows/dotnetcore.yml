@@ -170,5 +170,5 @@ jobs:
         api_key: ${{ secrets.OCTOPUS_API_TOKEN }}
         project: RandomQuotes
         server: ${{ secrets.OCTOPUS_SERVER_URL }}
-        deploy_to: Development
+        deploy_to: Dev
         packages: ${{ steps.package.outputs.versions_new_line }}
