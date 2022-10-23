@@ -1,3 +1,7 @@
+name: DotNET Core Build
+'on':
+  workflow_dispatch: {}
+  push: {}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -58,7 +62,4 @@ jobs:
         server: ${{ secrets.OCTOPUS_SERVER_URL }}
         deploy_to: Dev
         packages: ${{ steps.package.outputs.versions_new_line }}
-name: DotNET Core Build
-'on':
-  workflow_dispatch: {}
-  push: {}
+
