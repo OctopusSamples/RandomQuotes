@@ -45,7 +45,7 @@ jobs:
         path: '**/*.trx'
         reporter: dotnet-trx
         fail-on-error: 'false'
-        - name: Build and push
+    - name: Build and push
       uses: docker/build-push-action@v3
       with:
         push: true
