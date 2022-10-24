@@ -54,7 +54,7 @@ jobs:
       with:
         context: RandomQuotes
         push: true
-        tags: octopussamples/randomquotes:latest
+        tags: octopussamples/randomquotes:${{ steps.determine_version.outputs.semVer }}
     - name: Create Octopus Release
       uses: OctopusDeploy/create-release-action@v1.1.1
       with:
@@ -63,4 +63,3 @@ jobs:
         server: ${{ secrets.OCTOPUS_SERVER_URL }}
         deploy_to: Dev
         packages: Deploy container to Kubernetes:randomquotes:${{ steps.package.outputs.versions_new_line }}
-
