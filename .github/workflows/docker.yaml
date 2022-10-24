@@ -62,4 +62,4 @@ jobs:
         project: Random Quotes
         server: ${{ secrets.OCTOPUS_SERVER_URL }}
         deploy_to: Dev
-        packages: Deploy container to Kubernetes:randomquotes:${{ steps.package.outputs.versions_new_line }}
+        packages: Deploy container to Kubernetes:randomquotes:${{ steps.determine_version.outputs.semVer }}
